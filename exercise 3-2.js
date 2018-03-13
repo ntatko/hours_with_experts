@@ -1,16 +1,20 @@
 function isEven(a) {
   if(typeof a === 'number'){
     if (a == 0) {
-      return Boolean(1);
+      return true;
     } else if (a == 1) {
-      return Boolean(-0);
+      return false;
     } else if (a < 0){
       isEven(a + 2);
     } else {
       isEven(a - 2);
     }
   } else {
-    console.log("Not a number");
-    return -1;
+    throw new Error(a + " is not a number");
   }
 }
+
+console.log("is 12 even? " + String(isEven(12)));
+console.log("is 11 even? " + isEven(11));
+console.log("is -12 even? " + isEven(-12));
+console.log("is -11 even? " + isEven(-11));

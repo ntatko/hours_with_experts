@@ -5,7 +5,7 @@ while (number < 100) {
     console.log("FizzBuzz");
   } else if (number % 3 == 0) {
     console.log("Fizz");
-  } elseif (number % 5 == 0) {
+  } else if (number % 5 == 0) {
     console.log("Buzz");
   } else {
     console.log(number);
