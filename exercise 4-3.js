@@ -5,8 +5,7 @@ function arrayToList(arr) {
       list = {value: arr[i], rest: list};
     }
   } else {
-    console.log(arr + " is not an array.");
-    return -1;
+    throw new Error(arr + " is not an array.");
   }
 }
 
@@ -17,9 +16,9 @@ function listToArray(list) {
       arr.push(list.value);
       list = list.rest;
     }
+    return arr;
   } else {
-    console.log(list + " is not a list.");
-    return -1;
+    throw new Error(list + " is not a list.");
   }
 }
 
