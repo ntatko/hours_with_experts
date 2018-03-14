@@ -37,11 +37,15 @@ function deepEqual(obj1, obj2) {
       if (obj2.value) {
         // obj2 is a list
         if (Array.isArray(obj1)) {
+          let compared = Boolean(true);
           for (let i = 0; i < obj1.length; i++) {
             if (!obj.value) {
               break;
+            } else if (obj1[i] != obj2.value){
+              compared = Boolean(false);
             }
           }
+          return compared;
         } else {
           console.log("Hmm. They're not equal? (2)"); //debug only
           return Boolean(false);
