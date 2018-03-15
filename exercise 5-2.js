@@ -3,21 +3,15 @@ function average(array) {
 }
 
 function motherDaughterAgeGap(daughter) {
-  if (daughter.mother.born && daughter.sex == "f") {
-    var ageDifference = daughter.mother.born - daughter.born;
-    return ageDifference;
-  } else {
-    return;
-  }
+  if (daughter.mother.born && daughter.sex == "f") { return daughter.mother.born - daughter.born; }
+  // how would you abstract-ify this? it seems hardcoded to me.
 }
 
-function getAverageDifference(daughtersObjectList) {
+function getAverageDifference(list) {
   var ageGap = [];
-  for (var person in daughterObjectList) {
-    var gap = motherDaughterAgeGap(person);
-    if (typeof gap != 'undefined') {
-      ageGap.push(gap);
-    }
+  for (var i in list) {
+    var gap = motherDaughterAgeGap(i);
+    if (typeof gap != 'undefined') { ageGap.push(gap); }
   }
   return average(ageGap);
 }
