@@ -15,8 +15,9 @@ function reverseArrayInPlace(arr) {
   // other one is so much more eloquent.
   if (Array.isArray(arr)) {
     let temparr = arr;
-    for (let i = 0; i < arr.length; i++) {
-      arr[i] = temparr[temparr.length-1-i];
+    arr = []
+    for (let i = 0; i < temparr.length; i++) {
+      arr.unshift(temparr[i]);
     }
     return arr;
   } else {
