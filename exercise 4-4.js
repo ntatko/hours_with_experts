@@ -1,63 +1,41 @@
 function deepEqual(obj1, obj2) {
-  if (obj1 == obj2) {
-    return Boolean(1);
-  } else {
-    if (obj1.value) {
-      // obj1 is a list
-      if (obj2.value) {
-        // obj2 is a list
-        let compared = Boolean(true);
-        while (obj1.value && obj2.value) {
-          if (obj1.value != obj2.value) {
-            compared = Boolean(false);
-          }
-          obj1 = obj1.rest;
-          obj2 = obj2.rest;
-        }
-        return compared;
-      } else {
-        // obj2 is not a list
-        if (Array.isArray(obj2)) {
-          let compared = Boolean(true);
-          for (let i = 0; i < obj2.length; i++) {
-            if (!obj.value) {
-              break;
-            } else if (obj1.value != obj2[i]) {
-              compared = Boolean(false);
-            }
-            obj1 = obj1.value;
-          }
-          return compared;
-        } else {
-          console.log("Hmm. They're not equal? (1)"); //debug only
-          return Boolean(false);
-        }
-      }
-    } else {
-      if (obj2.value) {
-        // obj2 is a list
-        if (Array.isArray(obj1)) {
-          let compared = Boolean(true);
-          for (let i = 0; i < obj1.length; i++) {
-            if (!obj.value) {
-              break;
-            } else if (obj1[i] != obj2.value){
-              compared = Boolean(false);
-            }
-          }
-          return compared;
-        } else {
-          console.log("Hmm. They're not equal? (2)"); //debug only
-          return Boolean(false);
-        }
+  if (typeof obj1 === 'object' && typeof obj2 === 'object' && obj1 !== null && obj2 !== null){
+    //KNOWN: obj1 and obj2 are both not-null objects
 
+    obj1.keys().forEach(function(key1) {
+      obj2.keys().forEach(function(key2) {
+        if (deepEqual(key1, key2)) {
+          if (deepEqual(obj1.key1, obj2.key2)) {
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
+      });
+    });
+
+
+  } else {
+    if (obj1 !== null && obj2 !== null) {
+      // obj1 and obj2 are not objects and not null
+
+      if (obj1 === obj2) {
+        return true;
       } else {
-        // obj2 is not a list
-        // this means they are either both arrays, and thus obj1 == obj2, or obj1 and obj2 are the
-        // wrong data types altogether, in which case, they are not equal.
-        console.log("Hmm. They're not equal? (3)"); //debug only
-        return Boolean(false);
+        return false;
       }
+
+    } else {
+      // at least obj1 or obj2 is null
+
+      if (obj1 === null && obj2 === null) {
+        return true;
+      } else {
+        return false;
+      }
+
     }
   }
 }
