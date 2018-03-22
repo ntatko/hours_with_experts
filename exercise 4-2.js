@@ -14,10 +14,10 @@ function reverseArrayInPlace(arr) {
   // these functions seem identical, and both are equally optimal, but the
   // other one is so much more eloquent.
   if (Array.isArray(arr)) {
-    let temparr = arr;
-    arr = []
-    for (let i = 0; i < temparr.length; i++) {
-      arr.unshift(temparr[i]);
+    for (let i = 0; i < arr.length/2; i++) {
+      temp = arr[i]
+      arr[i] = arr[arr.length - 1 - i]
+      arr[arr.length - 1 - i] = temp
     }
     return arr;
   } else {

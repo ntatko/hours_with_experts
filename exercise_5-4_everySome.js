@@ -1,7 +1,7 @@
 function every(arr, searchFor) {
   var check = true;
   arr.forEach(function(iter) {
-    if (iter != searchFor) {
+    if (iter !== searchFor) {
       check = false;
     }
   });
