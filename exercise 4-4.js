@@ -2,8 +2,8 @@ function deepEqual(obj1, obj2) {
   if (typeof obj1 === 'object' && typeof obj2 === 'object' && obj1 !== null && obj2 !== null){
     //KNOWN: obj1 and obj2 are both not-null objects
 
-    obj1.keys().forEach(function(key1) {
-      obj2.keys().forEach(function(key2) {
+    Object.keys(obj1).forEach(function(key1) {
+      Object.keys(obj2).forEach(function(key2) {
         if (deepEqual(key1, key2)) {
           if (deepEqual(obj1.key1, obj2.key2)) {
             return true;
