@@ -1,9 +1,10 @@
 function arrayToList(arr) {
   if (Array.isArray(arr)) {
     let list = {};
-    for (let i = arr.length-1; i = 0; i--) {
+    for (let i = arr.length-1; i >= 0; i--) {
       list = {value: arr[i], rest: list};
     }
+    return list;
   } else {
     throw new Error(arr + " is not an array.");
   }

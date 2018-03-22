@@ -20,3 +20,12 @@ function getAverageDifference(familyArr) {
   });
   return average(ageGap);
 }
+
+
+function outputFib(n) {
+  var fibs = [0,1];
+  for (var i  = 0; i < n; i++) {
+    fibs.push(fibs[fibs.length-1] + fibs[fibs.length-2])
+  }
+  return fibs
+}
