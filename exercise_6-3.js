@@ -20,19 +20,17 @@ class Group {
   }
 
   from(arr) {
-    for (var i of arr) {
+    for (let i of arr) {
       this.add(i);
     }
+    return arr; // -OR- return this._arr;
   }
 }
 
-let group = new Group()
-group.from([10, 20]);
-console.log(group.has(10));
-// → true
-console.log(group.has(30));
-// → false
-group.add(10);
-group.delete(10);
-console.log(group.has(10));
-// → false
+let group = new Group();
+for (let value of group.from(["a", "b", "c"])) {
+  console.log(value);
+}
+// → a
+// → b
+// → c
