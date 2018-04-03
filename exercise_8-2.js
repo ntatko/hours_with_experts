@@ -11,18 +11,19 @@ const box = {
 
 function withBoxUnlocked(body) {
   if (box.locked) {
-    box.unlock();
     try {
+      box.unlock();
       body();
+      box.lock();
     } catch(err) {
-      console.log(err);
+      box.lock();
+      throw err;
     }
-    box.lock();
   } else {
     try {
       body();
     } catch(err) {
-      console.log(err);
+      throw err;
     }
   }
 }
