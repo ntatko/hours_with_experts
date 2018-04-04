@@ -39,8 +39,9 @@ class PGroup {
   }
 }
 
-let empty = new PGroup;
-let a = empty.add("a");
+PGroup.empty = new PGroup();
+
+let a = PGroup.empty.add("a");
 let ab = a.add("b");
 let b = ab.delete("a");
 
