@@ -11,10 +11,7 @@ function sort(list) {
 }
 
 function yourRobot({place, parcels}, memory) {
-  if (memory.length === 0) {
-    memory = mailRoute;
-    memory = memory.concat(mailRoute);
-  } else if (memory.length === mailRoute.length) {
+  if (memory.length === 0 && parcels.length !== 0) {
     parcels = sort(parcels);
     let parcel = parcels[0];
     if (parcel.place != place) {
@@ -23,6 +20,7 @@ function yourRobot({place, parcels}, memory) {
       memory = findRoute(roadGraph, place, parcel.address);
     }
   } else if (memory.length < mailRoute.length) {
+    parcels = sort(parcels);
     let parcel = parcels[0];
     if (parcel.place != place) {
       memory = findRoute(roadGraph, place, parcel.place);
