@@ -9,11 +9,9 @@ function primitiveMultiply(a, b) {
 }
 
 function reliableMultiply(a, b) {
-  let finished = false;
-  while (!finished) {
+  while (1) {
     try {
       return primitiveMultiply(a, b);
-      break;
     } catch(err) {
       console.log("nope... this error happened: " + err);
     }
