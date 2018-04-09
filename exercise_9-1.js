@@ -12,7 +12,7 @@ verify(/(ferr(et|y|ari))+/,
        ["ferret", "ferry", "ferrari"],
        ["ferrum", "transfer A"]);
 
-verify(/(ious[\s$])+/,
+verify(/(\b\w+ious\b)/,
        ["how delicious", "spacious room"],
        ["ruinous", "consciousness"]);
 
@@ -24,7 +24,7 @@ verify(/(\w{7})+/,
        ["hottentottententen"],
        ["no", "hotten totten tenten"]);
 
-verify(/[^eE]/,
+verify(/\b[^eE\s.]+\b/,
        ["red platypus", "wobbling nest"],
        ["earth bed", "learning ape", "BEET"]);
 
