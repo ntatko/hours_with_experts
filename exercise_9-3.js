@@ -1,5 +1,5 @@
 // Fill in this regular expression.
-let number = /^([0-9]*\.[0-9]*([eE]|[eE][-+])?[0-9]*)|([0-9]+)$/;
+let number = /^(([+-]?)(\d*)(\.\d*)?((e|E)(\+|\-)?\d*)?)$/;
 
 // Tests:
 for (let str of ["1", "-1", "+15", "1.55", ".5", "5.",
