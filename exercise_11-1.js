@@ -13,13 +13,14 @@ async function locateScalpel(nest) {
   return hopLocation
 }
 
-function recursiveLoop(nest, currentLocation) {
+function recursiveLoop(nest, thisHop) {
   try {
-    if (currentLocation == anyStorage(nest, currentLocation, 'scalpel')) {
-      return currentLocation
-    } else {
-      return recursiveLoop(nest, await anyStorage(nest, currentLocation, 'scalpel'))
-    }
+    return anyStorage(nest, thisHop, 'scalpel').then(nextHop => {
+      if (thisHop !== nextHop) {
+        return recursiveLoop(nest, nextHop)
+      }
+      return thisHop
+    })
   } catch(e) {
     throw new Error(e)
   }
@@ -29,5 +30,6 @@ function locateScalpel2(nest) {
   return recursiveLoop(nest, nest.name)
 }
 
-locateScalpel2(bigOak).then(console.log);
+locateScalpel(bigOak).then(console.log)
+locateScalpel2(bigOak).then(console.log)
 // → Butcher Shop
