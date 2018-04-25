@@ -1,0 +1,74 @@
+<style>body { min-height: 200px }</style>
+<img src="img/cat.png" id="cat" style="position: absolute">
+<img src="img/hat.png" id="hat" style="position: absolute">
+
+<script>
+  let cat = document.querySelector("#cat");
+  let hat = document.querySelector("#hat");
+
+  //let angle = 0;
+  //let lastTime = null;
+
+  var catPosition = [0, 0]
+  var hatPosition = [0, 0]
+
+  //var catHistory = [[0,0], [0,0], [0,0], [0,0]]
+
+  function historyCheck() {
+    let error = 5
+    //catHistory.splice(1)
+    //catHistory.push(catPosition)
+    //let arr = catHistory.filter(element => element < catPosition-error && element > catPosition+error)
+    //return arr.length === catHistory.length && catPosition === hatPosition
+    return  hatPosition[0] - error <= catPosition[0] <= hatPosition[0] + error && hatPosition[1] - error < catPosition[1] < hatPosition[1]  + error
+  }
+
+  // declare global variables for PID controller, as the looping state is unalterable
+  var h=1, Ti=1, Td=1, Kp=1, u0=[0,0], e0=[0,0]
+  var ui_prev = u0
+  var e_prev = e0
+
+  function pidController(axis) {
+
+    // Don't ask me about this code, I found it on the internet, and it seems
+    // exceptionally clunky....
+
+    let y = catPosition[axis]
+    let yc = hatPosition[axis]
+
+    let e = yc - y
+
+    let ui = ui_prev[axis] + 1/Ti * h*e
+    let ud = 1/Td * (e - e_prev[axis])/h
+
+    e_prev[axis] = e
+		ui_prev[axis] = ui
+
+    return Kp * (e + ui + ud)
+  }
+
+  function animate(time) {
+    //if (lastTime != null) angle += (time - lastTime) * 0.001;
+    //lastTime = time;
+    //cat.style.top = (Math.sin(angle) * 40 + 40) + "px";
+    //cat.style.left = (Math.cos(angle) * 200 + 230) + "px";
+
+    if (historyCheck()) {
+      console.log("the cat found the hat!")
+      hatPosition[0] = Math.random(40,500)
+      hatPosition[1] = Math.random(40,250)
+    }
+
+    for (let i = 0; i < catPosition.length; i++) {
+      catPosition[i] = pidController(i)
+    }
+
+    cat.style.top = catPosition[0] + "px"
+    cat.style.left = catPosition[1] + "px"
+    hat.style.top = hatPosition[0] + "px"
+    hat.style.left = hatPosition[1] + "px"
+
+    requestAnimationFrame(animate)
+  }
+  requestAnimationFrame(animate)
+</script>
