@@ -4,15 +4,16 @@
 
 <script>
   function byTagName(node, tagName) {
+    tagName = tagName.replace(/^h\d$/, 'heading')
     count = []
     function findChildren(node) {
-      if (node.childNodes) {
+      if (node.childNodes.item(0)) {
         for (let i of node.childNodes) {
-          findChildren(i)
-        }
-      } else {
-        if (note.nodeName === tagname) {
-          count.push(node)
+          if (i.toString().toLowerCase().includes(tagName)) {
+            count.push(i)
+          } else {
+          	findChildren(i)
+          }
         }
       }
     }

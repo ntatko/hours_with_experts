@@ -6,32 +6,32 @@
   let cat = document.querySelector("#cat");
   let hat = document.querySelector("#hat");
 
-  //let angle = 0;
-  //let lastTime = null;
-
   var catPosition = [0, 0]
   var hatPosition = [0, 0]
 
-  //var catHistory = [[0,0], [0,0], [0,0], [0,0]]
-
   function historyCheck() {
-    let error = 5
-    //catHistory.splice(1)
-    //catHistory.push(catPosition)
-    //let arr = catHistory.filter(element => element < catPosition-error && element > catPosition+error)
-    //return arr.length === catHistory.length && catPosition === hatPosition
-    return  hatPosition[0] - error <= catPosition[0] <= hatPosition[0] + error && hatPosition[1] - error < catPosition[1] < hatPosition[1]  + error
+    let error = 1
+    return  hatPosition[0] - error <= catPosition[0] && catPosition[0] < hatPosition[0] + error && hatPosition[1] - error <= catPosition[1] && catPosition[1] < hatPosition[1]  + error
+  }
+
+  function precisionRound(number, precision) {
+    var factor = Math.pow(10, precision);
+    return Math.round(number * factor) / factor;
   }
 
   // declare global variables for PID controller, as the looping state is unalterable
-  var h=1, Ti=1, Td=1, Kp=1, u0=[0,0], e0=[0,0]
+  var h=1, Ti=0.5, Td=0.5, Kp=0.08, u0=[0,0], e0=[0,0]
   var ui_prev = u0
   var e_prev = e0
 
   function pidController(axis) {
+    /*
 
-    // Don't ask me about this code, I found it on the internet, and it seems
-    // exceptionally clunky....
+    A PID Controller smoothes movement towards a target. It is generally used in motor control, as motors need to be spun up
+    I just wanted a working example of PID control to refer back to. This code is specialized for 2 axis, but the general
+    traits of PID are the same.
+
+    */
 
     let y = catPosition[axis]
     let yc = hatPosition[axis]
@@ -48,20 +48,16 @@
   }
 
   function animate(time) {
-    //if (lastTime != null) angle += (time - lastTime) * 0.001;
-    //lastTime = time;
-    //cat.style.top = (Math.sin(angle) * 40 + 40) + "px";
-    //cat.style.left = (Math.cos(angle) * 200 + 230) + "px";
 
     if (historyCheck()) {
-      console.log("the cat found the hat!")
-      hatPosition[0] = Math.random(40,500)
-      hatPosition[1] = Math.random(40,250)
+      hatPosition[0] = Math.random()*180
+      hatPosition[1] = Math.random()*800
     }
 
     for (let i = 0; i < catPosition.length; i++) {
-      catPosition[i] = pidController(i)
+      catPosition[i] = precisionRound(pidController(i), 2)
     }
+
 
     cat.style.top = catPosition[0] + "px"
     cat.style.left = catPosition[1] + "px"
