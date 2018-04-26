@@ -7,13 +7,12 @@
     tagName = tagName.replace(/^h\d$/, 'heading')
     count = []
     function findChildren(node) {
+      if (node.toString().toLowerCase().includes(tagName)) {
+        count.push(node)
+      }
       if (node.childNodes.item(0)) {
         for (let i of node.childNodes) {
-          if (i.toString().toLowerCase().includes(tagName)) {
-            count.push(i)
-          } else {
-          	findChildren(i)
-          }
+          findChildren(i)
         }
       }
     }
