@@ -1,4 +1,4 @@
-<p id='balloon'>🎈</p>
+<p id='balloon'>J</p>
 
 <script>
   size = 100
@@ -9,17 +9,18 @@
 
   function processPress(inputted) {
     inputted = inputted || window.event
+    console.log(inputted)
     if (size <= arbitraryLargeNumber) {
-      if (inputted.key === "ArrowUp") {
+      if (inputted.key === "ArrowUp" || inputted.key === 'Up') {
         size *= 1.1
-      } else if (inputted.key === "ArrowDown") {
+      } else if (inputted.key === "ArrowDown" || inputted.key === 'Down') {
         size *= 0.9
       }
       balloonText.style.fontSize = size+'%'
       if (size > arbitraryLargeNumber) {
         //pop
         console.log("popped")
-        balloonText.innerHTML = "💥"
+        balloonText.innerHTML = "8"
       }
     }
   }

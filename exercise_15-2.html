@@ -1,0 +1,30 @@
+<style>
+  .trail { /* className for the trail elements */
+    position: absolute;
+    height: 6px; width: 6px;
+    border-radius: 3px;
+    background: blue;
+    opacity: 1;
+  }
+  body {
+    height: 300px;
+  }
+</style>
+
+<script>
+  window.addEventListener("mousemove", event => {
+    let someArbitraryNumber = Math.round(10+Math.random()*20)
+    let now = document.createElement("div")
+    now.className = 'trail'
+    now.style.left = (event.pageX + 1) + "px"
+    now.style.top = (event.pageY + 1) + "px"
+    document.body.appendChild(now)
+    for (i = 0; i < document.getElementsByTagName("div").length; i++) {
+      console.log(typeof document.getElementsByTagName("div")[i])
+      document.getElementsByTagName("div")[i].style.opacity -= 1/someArbitraryNumber
+      if (document.getElementsByTagName("div")[i].style.opacity < 0) {
+      	document.getElementsByTagName("div")[i].remove()
+      }
+    }
+  })
+</script>

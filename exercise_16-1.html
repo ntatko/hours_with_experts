@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="css/game.css">
+
+<body>
+<script>
+  // The old runGame function. Modify it...
+  async function runGame(plans, Display) {
+    let level = 0
+    let lives = 5
+    while (level < plans.length) {
+      let status = await runLevel(new Level(plans[level]),
+                                  Display);
+      if (status == "won") {
+        level++
+      } else if (status === 'lost') {
+        lives--
+        if (lives === 0) {
+          level = 0
+          lives = 5
+        }
+      }
+    }
+    console.log("You've won!");
+  }
+  runGame(GAME_LEVELS, DOMDisplay);
+</script>
+</body>
