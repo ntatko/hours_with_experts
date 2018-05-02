@@ -1,0 +1,27 @@
+<p id='balloon'>🎈</p>
+
+<script>
+  size = 100
+  arbitraryLargeNumber = Math.round(1000+Math.random()*500)
+  balloonText = document.getElementById('balloon')
+  balloonText.style.fontSize = size+'%'
+  document.body.onkeydown = processPress
+
+  function processPress(inputted) {
+    inputted = inputted || window.event
+    if (size <= arbitraryLargeNumber) {
+      if (inputted.key === "ArrowUp") {
+        size *= 1.1
+      } else if (inputted.key === "ArrowDown") {
+        size *= 0.9
+      }
+      balloonText.style.fontSize = size+'%'
+      if (size > arbitraryLargeNumber) {
+        //pop
+        console.log("popped")
+        balloonText.innerHTML = "💥"
+      }
+    }
+  }
+
+</script>
