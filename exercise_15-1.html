@@ -1,4 +1,4 @@
-<p id='balloon'>J</p>
+<p id='balloon'>Balloon</p>
 
 <script>
   size = 100
@@ -8,20 +8,20 @@
   document.body.onkeydown = processPress
 
   function processPress(inputted) {
-    inputted = inputted || window.event
-    console.log(inputted)
-    if (size <= arbitraryLargeNumber) {
-      if (inputted.key === "ArrowUp" || inputted.key === 'Up') {
-        size *= 1.1
-      } else if (inputted.key === "ArrowDown" || inputted.key === 'Down') {
-        size *= 0.9
-      }
-      balloonText.style.fontSize = size+'%'
+    if (inputted.key === "ArrowDown" || inputted.key === 'Down') {
       if (size > arbitraryLargeNumber) {
-        //pop
-        console.log("popped")
-        balloonText.innerHTML = "8"
+        balloonText.innerHTML = "Balloon"
       }
+      size *= 0.9
+    } else if (inputted.key === "ArrowUp" || inputted.key === 'Up') {
+      if (size <= arbitraryLargeNumber) {
+        size *= 1.1
+      }
+    }
+    balloonText.style.fontSize = size+'%'
+    if (size > arbitraryLargeNumber) {
+      balloonText.innerHTML = "Popped"
+      console.log("popped")
     }
   }
 
