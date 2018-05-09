@@ -1,0 +1,118 @@
+<canvas width="600" height="300"></canvas>
+<script>
+
+  var paper = document.querySelector("canvas")
+  var ctx = paper.getContext('2d')
+
+
+  function regTrap(xPosition, yPosition, sizeMultiplier = 1) {
+
+    let height = 50
+    let width = 50
+
+	  let points = new Array()
+    points[0] = [xPosition, yPosition]
+    points[1] = [points[0][0] - width*sizeMultiplier, points[0][1]]
+    points[2] = [points[1][0] - width*sizeMultiplier/2, points[1][1] + height*sizeMultiplier]
+    points[3] = [points[2][0] + width*2*sizeMultiplier, points[2][1]]
+    points[4] = points[0]
+
+    ctx.beginPath()
+    ctx.moveTo(points[0][0], points[0][1])
+    for (let i = 1; i < 4; i++) {
+      ctx.lineTo(points[i][0], points[i][1])
+    }
+    ctx.closePath()
+    ctx.rotate(180*Math.PI/180)
+    ctx.stroke()
+    ctx.rotate(180*Math.PI/180)
+  }
+
+  function regDiamond(xPosition, yPosition, sizeMultiplier = 1, fill = 'red') {
+
+    let measure = 35
+
+    let center = [xPosition, yPosition + measure*sizeMultiplier]
+    let points = []
+    for (let i = 0; i < 4; i++) {
+      let x = center[0] - Math.cos(i*Math.PI/2)*measure*sizeMultiplier
+      let y = center[1] - Math.sin(i*Math.PI/2)*measure*sizeMultiplier
+      points.push([x, y])
+    }
+    ctx.beginPath()
+    ctx.moveTo(points[0][0], points[0][1])
+    for (let i in points) {
+      if (i !== 0) {
+        ctx.lineTo(points[i][0], points[i][1])
+      }
+    }
+    ctx.closePath()
+    ctx.fillStyle = fill
+    ctx.fill()
+  }
+
+  function zigZag(xPosition, yPosition, sizeMultiplier = 1) {
+    let width = 75
+    let height = 10
+
+    let points = new Array()
+    points[0] = [xPosition, yPosition]
+    points[1] = [xPosition + width, yPosition + 5*sizeMultiplier]
+    for (let i = 2; i < 13; i++) {
+      points[i] = [points[i-2][0], points[i-2][1] + height*sizeMultiplier]
+    }
+    ctx.beginPath()
+    ctx.moveTo(points[0][0], points[0][1])
+    for (let i in points) {
+      ctx.lineTo(points[i][0], points[i][1])
+    }
+    ctx.stroke()
+  }
+
+  function spiral(xPosition, yPosition, sizeMultiplier = 1) {
+    let center = yPosition + 50
+
+    let points = new Array()
+    points[0] = [xPosition, center]
+    for (let i = 1; i < 100; i++) {
+      let angle = 14*i*Math.PI/180
+      points[i] = [points[0][0] + sizeMultiplier*Math.cos(angle)*i/2, points[0][1] + sizeMultiplier*Math.sin(angle)*i/2]
+    }
+
+    ctx.beginPath()
+    ctx.moveTo(points[0][0], points[0][1])
+    for (let i in points) {
+      ctx.lineTo(points[i][0], points[i][1])
+    }
+    ctx.stroke()
+  }
+
+  function star(xPosition, yPosition, sizeMultiplier = 1, fillColor = 'orange') {
+    let radius = 60
+    let center = [xPosition, yPosition + radius]
+    let deltaAngle = (360/8)*Math.PI/180
+
+    let points = new Array()
+    for (let i = 0; i < 8; i++) {
+      points[i] = [center[0] + Math.cos(i*deltaAngle)*radius*sizeMultiplier, center[1] + Math.sin(i*deltaAngle)*radius*sizeMultiplier]
+    }
+    points.push(points[0])
+
+    ctx.beginPath()
+    ctx.moveTo(points[0][0], points[0][1])
+    for (let i in points) {
+      if (i !== 0) {
+        ctx.quadraticCurveTo(center[0], center[1], points[i][0], points[i][1])
+      }
+    }
+    ctx.fillStyle = fillColor
+    ctx.fill()
+  }
+
+  regTrap(100, 50)
+  regDiamond(180, 40)
+  zigZag(250, 45)
+  spiral(400, 25)
+  star(510, 15)
+
+</script>

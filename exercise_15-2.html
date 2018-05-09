@@ -1,9 +1,8 @@
 <style>
   .trail { /* className for the trail elements */
     position: absolute;
-    height: 6px; width: 6px;
-    border-radius: 3px;
-    background: blue;
+    height: 20px; width: 20px;
+    border-radius: 10px;
     opacity: 1;
   }
   body {
@@ -12,19 +11,30 @@
 </style>
 
 <script>
+  let someArbitraryNumber = Math.round(10+Math.random()*20)
+
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
   window.addEventListener("mousemove", event => {
-    let someArbitraryNumber = Math.round(10+Math.random()*20)
     let now = document.createElement("div")
     now.className = 'trail'
-    now.style.left = (event.pageX + 1) + "px"
-    now.style.top = (event.pageY + 1) + "px"
+    now.style.left = (event.pageX + 2) + "px"
+    now.style.top = (event.pageY + 2) + "px"
+    now.style.backgroundColor = getRandomColor()
+    now.style.opacity = 1
     document.body.appendChild(now)
-    for (i = 0; i < document.getElementsByTagName("div").length; i++) {
-      console.log(typeof document.getElementsByTagName("div")[i])
-      document.getElementsByTagName("div")[i].style.opacity -= 1/someArbitraryNumber
-      if (document.getElementsByTagName("div")[i].style.opacity < 0) {
-      	document.getElementsByTagName("div")[i].remove()
-      }
+    for (let i = 0; i < document.getElementsByTagName("div").length; i++) {
+      document.getElementsByTagName("div")[i].style.opacity = parseFloat(document.getElementsByTagName("div")[i].style.opacity) - 1/someArbitraryNumber
+    }
+    while (document.getElementsByTagName("div").length > someArbitraryNumber) {
+      document.getElementsByTagName("div")[0].remove()
     }
   })
 </script>
