@@ -1,0 +1,56 @@
+<!doctype html>
+<script src="code/chapter/16_game.js"></script>
+<script src="code/levels.js"></script>
+<script src="code/chapter/17_canvas.js"></script>
+
+<canvas width="800" height="300"></canvas>
+<script>
+  let cx = document.querySelector("canvas").getContext("2d");
+
+  let width = 800;
+  let height = 300
+
+  let lastTime = null;
+  function frame(time) {
+    if (lastTime != null) {
+      updateAnimation(Math.min(100, time - lastTime) / 1000);
+    }
+    lastTime = time;
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  let x = 100, y = 200;
+  let ballRadius = 10;
+  let xSpeed = 500
+  let ySpeed = 1000
+
+  function updateAnimation(step) {
+    cx.clearRect(0, 0, width, height);
+    cx.strokeStyle = getRandomColor();
+    cx.lineWidth = 4;
+    cx.strokeRect(25, 25, width - 50, height - 50);
+
+    x += step * xSpeed;
+    y += step * ySpeed;
+    if (x < 25 + ballRadius || x > width - 25 - ballRadius) {
+      xSpeed = -xSpeed;
+    }
+    if (y < 25 + ballRadius || y > height - 25 - ballRadius) {
+      ySpeed = -ySpeed;
+    }
+    cx.fillStyle = getRandomColor();
+    cx.beginPath();
+    cx.arc(x, y, ballRadius, 0, 7);
+    cx.fill();
+  }
+</script>
