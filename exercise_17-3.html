@@ -8,7 +8,7 @@
   let cx = document.querySelector("canvas").getContext("2d");
 
   let width = 800;
-  let height = 300
+  let height = 300;
 
   let lastTime = null;
   function frame(time) {
@@ -20,35 +20,33 @@
   }
   requestAnimationFrame(frame);
 
-  function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
-
   let x = 100, y = 200;
   let ballRadius = 10;
-  let xSpeed = 500
-  let ySpeed = 1000
+  let xSpeed = 250;
+  let ySpeed = -500;
 
   function updateAnimation(step) {
     cx.clearRect(0, 0, width, height);
-    cx.strokeStyle = getRandomColor();
+    cx.strokeStyle = 'blue';
     cx.lineWidth = 4;
     cx.strokeRect(25, 25, width - 50, height - 50);
 
-    x += step * xSpeed;
-    y += step * ySpeed;
-    if (x < 25 + ballRadius || x > width - 25 - ballRadius) {
+    ySpeed += 50
+
+    x += Math.round(step * xSpeed);
+    y += Math.round(step * ySpeed);
+    if (x <= 25 + ballRadius) {
       xSpeed = -xSpeed;
+      x = 25 + ballRadius;
+    } else if (x >= width - 25 - ballRadius) {
+      xSpeed = -xSpeed;
+      x = width - 25 - ballRadius;
     }
-    if (y < 25 + ballRadius || y > height - 25 - ballRadius) {
-      ySpeed = -ySpeed;
-    }
-    cx.fillStyle = getRandomColor();
+    if (y > height - 25 - ballRadius) {
+      ySpeed = -1000;
+      y = height - 25 - ballRadius
+    } //else if (y <= 25 + ballRadius)
+    cx.fillStyle = 'red';
     cx.beginPath();
     cx.arc(x, y, ballRadius, 0, 7);
     cx.fill();

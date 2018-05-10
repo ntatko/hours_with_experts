@@ -1,15 +1,15 @@
 <canvas width="600" height="300"></canvas>
 <script>
-  let cx = document.querySelector("canvas").getContext("2d");
-  let total = results
+  const cx = document.querySelector("canvas").getContext("2d");
+  const total = results
     .reduce((sum, {count}) => sum + count, 0);
   let currentAngle = -0.5 * Math.PI;
-  let centerX = 300, centerY = 150;
+  const centerX = 300, centerY = 150;
 
-  let textRadius = 100;
+  const textRadius = 100;
 
   for (let result of results) {
-    let sliceAngle = (result.count / total) * 2 * Math.PI;
+    const sliceAngle = (result.count / total) * 2 * Math.PI;
     cx.beginPath();
     cx.arc(centerX, centerY, 100,
            currentAngle, currentAngle + sliceAngle);
@@ -18,14 +18,24 @@
     cx.fillStyle = result.color;
     cx.fill();
   }
+
+  currentAngle = -0.5 * Math.PI;
   for (let result of results) {
-    let sliceAngle = (result.count / total) * 2 * Math.PI;
+    const sliceAngle = (result.count / total) * 2 * Math.PI;
     currentAngle += sliceAngle;
-    let textAngle = currentAngle - sliceAngle/2;
-    let textPos = [centerX + Math.cos(textAngle)*textRadius, centerY + Math.sin(textAngle)*textRadius];
+    const textAngle = currentAngle - sliceAngle/2;
+    const textPos = [centerX + Math.cos(textAngle)*textRadius, centerY + Math.sin(textAngle)*textRadius];
+
+    if (textAngle > 0.5*Math.PI) {
+      cx.textAlign = 'end';
+    } else {
+      cx.textAlign = 'start';
+    }
     cx.fillStyle = result.color;
     cx.font = "27px Arial";
-    cx.fillText(result.name + ": " + Math.round(100*result.count/total) + "%", textPos[0], textPos[1]);
-    cx.strokeText(result.name + ": " + Math.round(100*result.count/total) + "%", textPos[0], textPos[1]);
+    const offset = textAngle > 0 && textAngle < Math.PI ? 27 : -10
+
+    cx.fillText(`${result.name}: ${Math.round(100*result.count/total)}%`, textPos[0], textPos[1] + offset);
+    cx.strokeText(`${result.name}: ${Math.round(100*result.count/total)}%`, textPos[0], textPos[1] + offset);
   }
 </script>
